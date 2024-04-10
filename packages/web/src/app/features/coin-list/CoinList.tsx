@@ -150,10 +150,14 @@ export default function CoinList() {
               <TableCell>
                 {getNameByMarket(m.code)} <br /> {m.code}
               </TableCell>
-              <TableCell>{numberCommas(m.trade_price)}</TableCell>
+              <TableCell
+                className={`${m.change === "RISE" ? "text-red-600" : "text-blue-600"}`}
+              >
+                {numberCommas(m.trade_price)}
+              </TableCell>
               <TableCell>
                 <div
-                  className={`p-1 w-28 border border-transparent ${m.updated === "up" ? "animate-price-up" : "animate-price-down"}`}
+                  className={`p-1 w-28 border border-transparent ${m.change === "RISE" ? "text-red-600" : "text-blue-600"} ${m.updated === "up" ? "animate-price-up" : "animate-price-down"}`}
                 >
                   {(m.signed_change_rate * 100).toFixed(0)}%
                   <br />
