@@ -12,6 +12,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { useRouter } from "next/navigation";
 
 export type Root = {
   type: string;
@@ -53,8 +54,15 @@ const krwMarkets = MARKET_ALL.filter((item) =>
   item.market.startsWith("KRW"),
 ).map((item) => item.market);
 
+export const getNameByMarket = (market: string) => {
+  const foundMarket = MARKET_ALL.find((item) => item.market === market);
+  return foundMarket ? foundMarket.korean_name : null;
+};
+
 export default function CoinList() {
   const [messages, setMessages] = useState<Root[]>([]);
+
+  const router = useRouter();
 
   useEffect(() => {
     const ws = new WebSocket("wss://api.upbit.com/websocket/v1");
@@ -119,11 +127,6 @@ export default function CoinList() {
     };
   }, []);
 
-  const getNameByMarket = (market: string) => {
-    const foundMarket = MARKET_ALL.find((item) => item.market === market);
-    return foundMarket ? foundMarket.korean_name : null;
-  };
-
   const numberCommas = (num: number | string) => {
     return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   };
@@ -145,7 +148,11 @@ export default function CoinList() {
       <TableBody>
         {messages.map((m, i) => {
           return (
-            <TableRow key={i} className="h-20">
+            <TableRow
+              key={i}
+              onClick={() => router.push(`/coins/${m.code}`)}
+              className="h-20 cursor-pointer"
+            >
               <TableCell>
                 {getNameByMarket(m.code)} <br /> {m.code}
               </TableCell>

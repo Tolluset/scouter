@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 
 import { Table, TableBody, TableCell, TableRow } from "@/components/ui/table";
+import { getNameByMarket } from "../coin-list/CoinList";
 
 export interface Ordrbook {
   type: string;
@@ -78,63 +79,69 @@ export default function OrderBook({ code }: { code: string }) {
   }, [code]);
 
   return (
-    <Table>
-      <TableBody>
-        {messages
-          .slice(0)
-          .reverse()
-          .map((item, i) => {
+    <>
+      <div className="flex justify-center gap-x-2 py-2">
+        <strong>{getNameByMarket(code)}</strong>
+        <p>{code}</p>
+      </div>
+      <Table>
+        <TableBody>
+          {messages
+            .slice(0)
+            .reverse()
+            .map((item, i) => {
+              return (
+                <TableRow key={i}>
+                  <TableCell className="relative text-right bg-blue-100">
+                    <div className="flex justify-end">
+                      <div
+                        style={{
+                          width: `${(item.ask_size / top.ask_size) * 100}%`,
+                        }}
+                        className="bg-blue-200 h-6"
+                      >
+                        &nbsp;
+                      </div>
+                      <p className="absolute top-1/2 -translate-y-2/4">
+                        {item.ask_size.toFixed(3)}
+                      </p>
+                    </div>
+                  </TableCell>
+                  <TableCell className="w-40 bg-blue-200 text-center">
+                    {item.ask_price}
+                  </TableCell>
+                  <TableCell />
+                </TableRow>
+              );
+            })}
+
+          {messages.map((item, i) => {
             return (
               <TableRow key={i}>
-                <TableCell className="relative text-right bg-blue-100">
-                  <div className="flex justify-end">
+                <TableCell />
+                <TableCell className="w-40 bg-red-200 text-center">
+                  {item.bid_price}
+                </TableCell>
+                <TableCell className="relative text-left bg-red-100">
+                  <div className="flex justify-start">
                     <div
                       style={{
-                        width: `${(item.ask_size / top.ask_size) * 100}%`,
+                        width: `${(item.bid_size / top.bid_size) * 100}%`,
                       }}
-                      className="bg-blue-200 h-6"
+                      className="bg-red-200 h-6"
                     >
                       &nbsp;
                     </div>
                     <p className="absolute top-1/2 -translate-y-2/4">
-                      {item.ask_size.toFixed(3)}
+                      {item.bid_size.toFixed(3)}
                     </p>
                   </div>
                 </TableCell>
-                <TableCell className="w-40 bg-blue-200 text-center">
-                  {item.ask_price}
-                </TableCell>
-                <TableCell />
               </TableRow>
             );
           })}
-
-        {messages.map((item, i) => {
-          return (
-            <TableRow key={i}>
-              <TableCell />
-              <TableCell className="w-40 bg-red-200 text-center">
-                {item.bid_price}
-              </TableCell>
-              <TableCell className="relative text-left bg-red-100">
-                <div className="flex justify-start">
-                  <div
-                    style={{
-                      width: `${(item.bid_size / top.bid_size) * 100}%`,
-                    }}
-                    className="bg-red-200 h-6"
-                  >
-                    &nbsp;
-                  </div>
-                  <p className="absolute top-1/2 -translate-y-2/4">
-                    {item.bid_size.toFixed(3)}
-                  </p>
-                </div>
-              </TableCell>
-            </TableRow>
-          );
-        })}
-      </TableBody>
-    </Table>
+        </TableBody>
+      </Table>
+    </>
   );
 }
