@@ -22,12 +22,12 @@ export type Root = {
   trade_price: number;
   prev_closing_price: number;
   acc_trade_price: number;
-  change: string;
+  change: "RISE" | "EVEN" | "FALL";
   change_price: number;
   signed_change_price: number;
   change_rate: number;
   signed_change_rate: number;
-  ask_bid: string;
+  ask_bid: "ASK" | "BID";
   trade_volume: number;
   acc_trade_volume: number;
   trade_date: string;
@@ -49,14 +49,12 @@ export type Root = {
   stream_type: string;
 } & { updated: "up" | "down" | "none" };
 
-export default function CoinList() {
-  const [socket, setSocket] = useState<WebSocket | null>(null);
-  const [message, setMessage] = useState("");
-  const [messages, setMessages] = useState<Root[]>([]);
+const krwMarkets = MARKET_ALL.filter((item) =>
+  item.market.startsWith("KRW"),
+).map((item) => item.market);
 
-  const krwMarkets = MARKET_ALL.filter((item) =>
-    item.market.startsWith("KRW"),
-  ).map((item) => item.market);
+export default function CoinList() {
+  const [messages, setMessages] = useState<Root[]>([]);
 
   useEffect(() => {
     const ws = new WebSocket("wss://api.upbit.com/websocket/v1");
@@ -85,7 +83,12 @@ export default function CoinList() {
         };
         const dataIsUpdated = {
           ...data,
-          updated: data.change === "RISE" ? "up" : "down",
+          updated:
+            data.ask_bid === "ASK"
+              ? "up"
+              : data.ask_bid === "BID"
+                ? "down"
+                : "none",
         };
         const sorted = [...filtered, dataIsUpdated].sort(
           (a, b) => sortyBy(b) - sortyBy(a),
@@ -109,11 +112,7 @@ export default function CoinList() {
 
     ws.onclose = () => {
       console.log("disconnected");
-
-      setSocket(null);
     };
-
-    setSocket(ws);
 
     return () => {
       ws.close();
@@ -151,13 +150,13 @@ export default function CoinList() {
                 {getNameByMarket(m.code)} <br /> {m.code}
               </TableCell>
               <TableCell
-                className={`${m.change === "RISE" ? "text-red-600" : "text-blue-600"}`}
+                className={`${m.change === "RISE" ? "text-red-600" : m.change === "FALL" ? "text-blue-600" : ""}`}
               >
                 {numberCommas(m.trade_price)}
               </TableCell>
               <TableCell>
                 <div
-                  className={`p-1 w-28 border border-transparent ${m.change === "RISE" ? "text-red-600" : "text-blue-600"} ${m.updated === "up" ? "animate-price-up" : "animate-price-down"}`}
+                  className={`p-1 w-28 border border-transparent ${m.updated === "up" ? "animate-price-up" : m.updated === "down" ? "animate-price-down" : ""} ${m.change === "RISE" ? "text-red-600" : m.change === "FALL" ? "text-blue-600" : ""}`}
                 >
                   {(m.signed_change_rate * 100).toFixed(2)}%
                   <br />
