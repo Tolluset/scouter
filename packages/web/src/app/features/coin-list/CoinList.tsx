@@ -159,7 +159,7 @@ export default function CoinList() {
                 <div
                   className={`p-1 w-28 border border-transparent ${m.change === "RISE" ? "text-red-600" : "text-blue-600"} ${m.updated === "up" ? "animate-price-up" : "animate-price-down"}`}
                 >
-                  {(m.signed_change_rate * 100).toFixed(0)}%
+                  {(m.signed_change_rate * 100).toFixed(2)}%
                   <br />
                   {m.signed_change_price > 0
                     ? "+" + m.signed_change_price
