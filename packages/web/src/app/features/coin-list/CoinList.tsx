@@ -7,7 +7,6 @@ import { MARKET_ALL } from "@/constants";
 import {
   Table,
   TableBody,
-  TableCaption,
   TableCell,
   TableHead,
   TableHeader,
@@ -154,7 +153,7 @@ export default function CoinList() {
               <TableCell>{numberCommas(m.trade_price)}</TableCell>
               <TableCell>
                 <div
-                  className={`p-2 box-border ${m.updated === "up" ? "animate-price-up" : "animate-price-down"}`}
+                  className={`p-1 w-28 border border-transparent ${m.updated === "up" ? "animate-price-up" : "animate-price-down"}`}
                 >
                   {(m.signed_change_rate * 100).toFixed(0)}%
                   <br />
