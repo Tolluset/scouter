@@ -84,9 +84,9 @@ export default function CoinList() {
         const dataIsUpdated = {
           ...data,
           updated:
-            data.ask_bid === "ASK"
+            data.ask_bid === "BID"
               ? "up"
-              : data.ask_bid === "BID"
+              : data.ask_bid === "ASK"
                 ? "down"
                 : "none",
         };
