@@ -139,10 +139,10 @@ export default function CoinList() {
     <Table>
       <TableHeader>
         <TableRow>
-          <TableHead>한글명</TableHead>
-          <TableHead>현재가</TableHead>
-          <TableHead>전일대비</TableHead>
-          <TableHead>거래대금</TableHead>
+          <TableHead className="w-1/6">한글명</TableHead>
+          <TableHead className="w-1/6">현재가</TableHead>
+          <TableHead className="w-1/6">전일대비</TableHead>
+          <TableHead className="w-1/6">거래대금</TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>
@@ -168,8 +168,8 @@ export default function CoinList() {
                   {(m.signed_change_rate * 100).toFixed(2)}%
                   <br />
                   {m.signed_change_price > 0
-                    ? "+" + m.signed_change_price
-                    : m.signed_change_price}
+                    ? "+" + numberCommas(m.signed_change_price)
+                    : numberCommas(m.signed_change_price)}
                 </div>
               </TableCell>
               <TableCell>{millionNumbers(m.acc_trade_price_24h)}</TableCell>
