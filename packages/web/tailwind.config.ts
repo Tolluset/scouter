@@ -67,26 +67,40 @@ const config = {
           from: { height: "var(--radix-accordion-content-height)" },
           to: { height: "0" },
         },
+        "fade-in": {
+          from: {
+            opacity: "0",
+          },
+          to: {
+            opacity: "1",
+          },
+        },
+        "fade-out": {
+          from: {
+            opacity: "1",
+          },
+          to: {
+            opacity: "0",
+          },
+        },
         "price-up": {
           from: {
             border: "2px solid red",
           },
-          to: {
-            // borderBottom: "1px solid #e4e4e7",
-          },
+          to: {},
         },
         "price-down": {
           from: {
             border: "2px solid blue",
           },
-          to: {
-            // borderBottom: "1px solid #e4e4e7",
-          },
+          to: {},
         },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
+        "fade-in": "fade-in 0.5s ease-out",
+        "fade-out": "fade-out 0.5s esa-out",
         "price-up": "price-up 0.5s ease-out",
         "price-down": "price-down 0.5s ease-out",
       },

@@ -139,10 +139,10 @@ export default function CoinList() {
     <Table>
       <TableHeader>
         <TableRow>
-          <TableHead className="w-1/6">한글명</TableHead>
-          <TableHead className="w-1/6">현재가</TableHead>
-          <TableHead className="w-1/6">전일대비</TableHead>
-          <TableHead className="w-1/6">거래대금</TableHead>
+          <TableHead className="w-1/4">한글명</TableHead>
+          <TableHead className="w-1/4">현재가</TableHead>
+          <TableHead className="w-1/4">전일대비</TableHead>
+          <TableHead className="w-1/4">거래대금</TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>
