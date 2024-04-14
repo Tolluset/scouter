@@ -3,7 +3,7 @@ import "./globals.css";
 import { Toaster } from "@/components/ui/toaster";
 
 export const metadata: Metadata = {
-  title: "코인 모의 투자",
+  title: "토까우터 | 코인 모의 투자",
   description: "코인 모의 투자",
 };
 

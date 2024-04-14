@@ -6,6 +6,7 @@ import { SubmitButton } from "./submit-button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import AlertMessage from "./alert-message";
+import GoogleLogin from "./google-login";
 
 export default function Login({
   searchParams,
@@ -13,29 +14,6 @@ export default function Login({
   searchParams: { message: string };
 }) {
   // @TODO: Implement Google Sign-In
-  const googleSignIn = async () => {
-    const supabase = createClient();
-    const origin = headers().get("origin");
-
-    const { data, error } = await supabase.auth.signInWithOAuth({
-      provider: "google",
-      options: {
-        redirectTo: `${origin}/auth/v1/callback`,
-        queryParams: {
-          access_type: "offline",
-          prompt: "consent",
-        },
-      },
-    });
-
-    if (!data && error) {
-      return redirect("/login?message=signin_failed");
-    }
-
-    if (data.url !== null) {
-      return redirect(data.url);
-    }
-  };
 
   const signIn = async (formData: FormData) => {
     "use server";
@@ -129,13 +107,15 @@ export default function Login({
           <SubmitButton formAction={signIn} pendingText="로그인 중...">
             로그인
           </SubmitButton>
+          <hr className="my-4" />
           <SubmitButton
             formAction={signUp}
             variant="secondary"
-            pendingText="이메일로 가입 중..."
+            pendingText="이메일로 시작하는 중..."
           >
-            이메일로 가입
+            이메일로 시작하기
           </SubmitButton>
+          <GoogleLogin />
           <AlertMessage message={searchParams.message} />
         </form>
       </div>

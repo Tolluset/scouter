@@ -1,6 +1,7 @@
 export const ROUTES = {
   home: "/",
   login: "/login",
+  myPage: "/my-page",
 };
 
 export function getBaseURL() {
