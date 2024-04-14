@@ -15,11 +15,12 @@ export default function Login({
   // @TODO: Implement Google Sign-In
   const googleSignIn = async () => {
     const supabase = createClient();
+    const origin = headers().get("origin");
 
     const { data, error } = await supabase.auth.signInWithOAuth({
       provider: "google",
       options: {
-        redirectTo: "http://localhost:3000/auth/v1/callback",
+        redirectTo: `${origin}/auth/v1/callback`,
         queryParams: {
           access_type: "offline",
           prompt: "consent",
@@ -75,7 +76,7 @@ export default function Login({
       return redirect("/login?message=signup_failed");
     }
 
-    return redirect("/ ");
+    return redirect("/");
   };
 
   return (

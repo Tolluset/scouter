@@ -1,4 +1,4 @@
-import OrderBook from "@/app/features/orderbook/OrderBook";
+import OrderBook from "@/app/coins/order-book";
 
 export default function CoinCodePage({
   params,
