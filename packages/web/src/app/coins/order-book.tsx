@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import { Table, TableBody, TableCell, TableRow } from "@/components/ui/table";
 import { getNameByMarket } from "@/app/coins/coin-list";
@@ -25,10 +25,13 @@ export interface OrderbookUnit {
 
 export default function OrderBook({ code }: { code: string }) {
   const [messages, setMessages] = useState<OrderbookUnit[]>([]);
+  const [messageRecived, setMessageRecived] = useState<boolean>(false);
   const [top, setTop] = useState<{ bid_size: number; ask_size: number }>({
     bid_size: 0,
     ask_size: 0,
   });
+
+  const containerRef = useRef<HTMLTableElement>(null);
 
   useEffect(() => {
     const ws = new WebSocket("wss://api.upbit.com/websocket/v1");
@@ -50,7 +53,9 @@ export default function OrderBook({ code }: { code: string }) {
     ws.onmessage = async (event) => {
       const text = await event.data.text();
       const data = JSON.parse(text);
+
       setMessages(data.orderbook_units);
+      setMessageRecived(true);
       setTop(
         data.orderbook_units.reduce(
           (
@@ -78,12 +83,20 @@ export default function OrderBook({ code }: { code: string }) {
     };
   }, [code]);
 
+  useEffect(() => {
+    const container = containerRef.current;
+
+    if (container) {
+      const containerRect = container.getBoundingClientRect();
+      container.scrollTop = containerRect.height / 2;
+    }
+  }, [messageRecived]);
+
   return (
-    <>
-      <div className="flex justify-center gap-x-2 py-2">
-        <strong>{getNameByMarket(code)}</strong>
-        <p>{code}</p>
-      </div>
+    <div
+      ref={containerRef}
+      className="relative w-full min-w-[140px] max-w-sm sm:max-w-2xl overflow-scroll"
+    >
       <Table>
         <TableBody>
           {messages
@@ -92,8 +105,11 @@ export default function OrderBook({ code }: { code: string }) {
             .map((item, i) => {
               return (
                 <TableRow key={i}>
-                  <TableCell className="relative text-right bg-blue-100">
-                    <div className="flex justify-end">
+                  <TableCell className="w-1/4 bg-blue-200 text-right">
+                    {item.ask_price}
+                  </TableCell>
+                  <TableCell className="relative bg-blue-100">
+                    <div className="flex justify-start">
                       <div
                         style={{
                           width: `${(item.ask_size / top.ask_size) * 100}%`,
@@ -107,10 +123,6 @@ export default function OrderBook({ code }: { code: string }) {
                       </p>
                     </div>
                   </TableCell>
-                  <TableCell className="w-40 bg-blue-200 text-center">
-                    {item.ask_price}
-                  </TableCell>
-                  <TableCell />
                 </TableRow>
               );
             })}
@@ -118,11 +130,10 @@ export default function OrderBook({ code }: { code: string }) {
           {messages.map((item, i) => {
             return (
               <TableRow key={i}>
-                <TableCell />
-                <TableCell className="w-40 bg-red-200 text-center">
+                <TableCell className="w-1/4 bg-red-200 text-right">
                   {item.bid_price}
                 </TableCell>
-                <TableCell className="relative text-left bg-red-100">
+                <TableCell className="relative  bg-red-100">
                   <div className="flex justify-start">
                     <div
                       style={{
@@ -142,6 +153,6 @@ export default function OrderBook({ code }: { code: string }) {
           })}
         </TableBody>
       </Table>
-    </>
+    </div>
   );
 }

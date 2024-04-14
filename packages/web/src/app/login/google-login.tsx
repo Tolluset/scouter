@@ -32,7 +32,7 @@ export default function GoogleLogin() {
   };
 
   return (
-    <Button type="button" variant="secondary" onClick={googleSignIn}>
+    <Button type="button" variant="outline" onClick={googleSignIn}>
       Google로 시작하기
     </Button>
   );

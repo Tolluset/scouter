@@ -110,7 +110,7 @@ export default function Login({
           <hr className="my-4" />
           <SubmitButton
             formAction={signUp}
-            variant="secondary"
+            variant="outline"
             pendingText="이메일로 시작하는 중..."
           >
             이메일로 시작하기
