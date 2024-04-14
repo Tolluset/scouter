@@ -95,7 +95,7 @@ export default function OrderBook({ code }: { code: string }) {
   return (
     <div
       ref={containerRef}
-      className="relative w-full min-w-[140px] max-w-sm sm:max-w-2xl overflow-scroll"
+      className="relative w-1/3 min-w-[140px] sm:max-w-4xl overflow-scroll"
     >
       <Table>
         <TableBody>
