@@ -8,12 +8,17 @@ import { Label } from "@/components/ui/label";
 import AlertMessage from "./alert-message";
 import GoogleLogin from "./google-login";
 
-export default function Login({
+export default async function Login({
   searchParams,
 }: {
   searchParams: { message: string };
 }) {
-  // @TODO: Implement Google Sign-In
+  const supabase = createClient();
+  const user = await supabase.auth.getUser();
+
+  if (user.data.user) {
+    return redirect("/");
+  }
 
   const signIn = async (formData: FormData) => {
     "use server";
@@ -42,7 +47,7 @@ export default function Login({
     const password = formData.get("password") as string;
     const supabase = createClient();
 
-    const { error } = await supabase.auth.signUp({
+    const { data, error } = await supabase.auth.signUp({
       email,
       password,
       options: {
@@ -53,6 +58,18 @@ export default function Login({
     if (error) {
       return redirect("/login?message=signup_failed");
     }
+
+    const account = {
+      number: crypto.randomUUID(),
+      name: "시작계좌",
+    };
+
+    await supabase.from("Accounts").insert({
+      user_id: data.user?.id,
+      account_number: account.number,
+      account_name: account.name,
+      balance: 0,
+    });
 
     return redirect("/");
   };
