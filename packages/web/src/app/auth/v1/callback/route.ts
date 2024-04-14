@@ -12,6 +12,20 @@ export async function GET(request: Request) {
   if (code) {
     const supabase = createClient();
     await supabase.auth.exchangeCodeForSession(code);
+
+    const user = await supabase.auth.getUser();
+
+    const account = {
+      number: crypto.randomUUID(),
+      name: "시작계좌",
+    };
+
+    await supabase.from("Accounts").insert({
+      user_id: user.data.user?.id,
+      account_number: account.number,
+      account_name: account.name,
+      balance: 0,
+    });
   }
 
   // URL to redirect to after sign up process completes

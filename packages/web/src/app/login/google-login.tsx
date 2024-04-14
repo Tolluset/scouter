@@ -22,12 +22,8 @@ export default function GoogleLogin() {
       },
     });
 
-    if (!data && error) {
+    if (!data || error) {
       router.push("/login?message=signin_failed");
-    }
-
-    if (data.url !== null) {
-      router.push(data.url);
     }
   };
 
