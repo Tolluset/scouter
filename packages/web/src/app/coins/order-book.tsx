@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 
 import { Table, TableBody, TableCell, TableRow } from "@/components/ui/table";
-import { getNameByMarket } from "../coin-list/CoinList";
+import { getNameByMarket } from "@/app/coins/coin-list";
 
 export interface Ordrbook {
   type: string;
