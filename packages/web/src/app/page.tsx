@@ -12,7 +12,7 @@ export default async function Home() {
 
   return (
     <>
-      <nav className="flex justify-end w-full p-2 border-b sm:p-4">
+      <nav className="flex justify-end w-full p-2 border-b">
         {user ? (
           <Button variant="ghost">
             <Link href={ROUTES.myPage}>

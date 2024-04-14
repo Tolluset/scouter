@@ -128,6 +128,9 @@ export default function CoinList() {
   }, []);
 
   const numberCommas = (num: number | string) => {
+    if (+num < 1) {
+      return num;
+    }
     return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   };
 
@@ -139,10 +142,10 @@ export default function CoinList() {
     <Table>
       <TableHeader>
         <TableRow>
-          <TableHead className="w-1/6">한글명</TableHead>
-          <TableHead className="w-1/6">현재가</TableHead>
-          <TableHead className="w-1/6">전일대비</TableHead>
-          <TableHead className="w-1/6">거래대금</TableHead>
+          <TableHead className="w-1/5">한글명</TableHead>
+          <TableHead className="w-1/4 text-right">현재가</TableHead>
+          <TableHead className="w-1/4 text-right">전일대비</TableHead>
+          <TableHead className="w-1/5 text-right">거래대금</TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>
@@ -157,22 +160,26 @@ export default function CoinList() {
                 {getNameByMarket(m.code)} <br /> {m.code}
               </TableCell>
               <TableCell
-                className={`${m.change === "RISE" ? "text-red-600" : m.change === "FALL" ? "text-blue-600" : ""}`}
+                className={`text-right ${m.change === "RISE" ? "text-red-600" : m.change === "FALL" ? "text-blue-600" : ""}`}
               >
                 {numberCommas(m.trade_price)}
               </TableCell>
-              <TableCell>
-                <div
-                  className={`p-1 border border-transparent ${m.updated === "up" ? "animate-price-up" : m.updated === "down" ? "animate-price-down" : ""} ${m.change === "RISE" ? "text-red-600" : m.change === "FALL" ? "text-blue-600" : ""}`}
+              <TableCell className="flex justify-end text-right">
+                <p
+                  className={`p-1 w-24 border border-transparent
+                    ${m.updated === "up" ? "animate-price-up" : m.updated === "down" ? "animate-price-down" : ""}
+                    ${m.change === "RISE" ? "text-red-600" : m.change === "FALL" ? "text-blue-600" : ""}`}
                 >
                   {(m.signed_change_rate * 100).toFixed(2)}%
                   <br />
                   {m.signed_change_price > 0
                     ? "+" + numberCommas(m.signed_change_price)
                     : numberCommas(m.signed_change_price)}
-                </div>
+                </p>
               </TableCell>
-              <TableCell>{millionNumbers(m.acc_trade_price_24h)}</TableCell>
+              <TableCell className="text-right">
+                {millionNumbers(m.acc_trade_price_24h)}
+              </TableCell>
             </TableRow>
           );
         })}
