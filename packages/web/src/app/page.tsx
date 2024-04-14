@@ -13,7 +13,7 @@ export default async function Home() {
   return (
     <>
       <nav className="flex justify-end w-full p-2 border-b">
-        {user ? (
+        {user.data.user ? (
           <Button variant="ghost">
             <Link href={ROUTES.myPage}>
               <AvatarIcon width={20} height={20} color="lightslategray" />
