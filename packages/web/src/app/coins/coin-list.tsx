@@ -13,6 +13,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { useRouter } from "next/navigation";
+import { millionNumbers, numberCommas } from "@/utils/coins";
 
 export type Root = {
   type: string;
@@ -126,17 +127,6 @@ export default function CoinList() {
       ws.close();
     };
   }, []);
-
-  const numberCommas = (num: number | string) => {
-    if (+num < 1) {
-      return num;
-    }
-    return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-  };
-
-  const millionNumbers = (num: number) => {
-    return numberCommas((num / 1000000).toFixed(0)) + "백만";
-  };
 
   return (
     <Table>
