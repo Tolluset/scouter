@@ -1,12 +1,4 @@
 import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
 import { Table, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { ROUTES } from "@/constants";
 import { createClient } from "@/utils/supabase/server";
@@ -34,9 +26,9 @@ export default async function MyPage() {
 
   return (
     <div>
-      <CardTitle>내 이메일: {user.data.user.email}</CardTitle>
+      내 이메일: {user.data.user.email}
       {/* <CardDescription>내 잔고: {user.data.user.id}</CardDescription> */}내
-      잔고: {user.data.user.id}
+      {/* 잔고: {user.data.user.id} */}
       <Button variant="outline">충전하기</Button>
       <Table>
         <TableHeader>
@@ -45,6 +37,7 @@ export default async function MyPage() {
           </TableRow>
         </TableHeader>
       </Table>
+      <LogoutButton />
     </div>
   );
 }
