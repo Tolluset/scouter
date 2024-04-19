@@ -26,15 +26,16 @@ export default async function MyPage() {
   return (
     <main className="h-full flex flex-col items-center w-full">
       <div className="flex-1 flex flex-col w-full px-6 sm:max-w-md justify-center gap-2">
-        <p>내 정보</p>
+        <h1 className="text-lg font-bold pb-8">내 정보</h1>
         <p>내 이메일: {user.data.user.email}</p>
         {accounts.data?.map((account) => {
           return (
             <div key={account.id}>
-              <p>
-                내 잔고: {account.account_name} / {account.account_number}
+              <p className="text-sm">계좌이름: {account.account_name}</p>
+              <p className="text-sm">계좌번호: {account.account_number}</p>
+              <p className="pt-4">
+                계좌잔고: {numberCommas(account.balance)} 원
               </p>
-              <p>내 현금: {numberCommas(account.balance)} 원</p>
             </div>
           );
         })}
