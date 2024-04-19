@@ -33,7 +33,7 @@ export async function GET(request: Request) {
       user_id: user.data.user?.id,
       account_number: account.number,
       account_name: account.name,
-      balance: 0,
+      balance: 10_000_000,
     });
   }
 
