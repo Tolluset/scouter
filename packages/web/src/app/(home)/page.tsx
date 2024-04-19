@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import CoinList from "./coins/coin-list";
+import CoinList from "../coins/coin-list";
 import Link from "next/link";
 import { ROUTES } from "@/constants";
 import { createClient } from "@/utils/supabase/server";
