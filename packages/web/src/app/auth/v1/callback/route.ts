@@ -15,6 +15,15 @@ export async function GET(request: Request) {
 
     const user = await supabase.auth.getUser();
 
+    const accounts = await supabase
+      .from("Accounts")
+      .select("*")
+      .eq("user_id", user.data.user?.id);
+
+    if (!accounts || accounts.error || accounts.data.length > 0) {
+      return NextResponse.redirect(`${origin}/`);
+    }
+
     const account = {
       number: crypto.randomUUID(),
       name: "시작계좌",
