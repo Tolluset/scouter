@@ -164,18 +164,21 @@ export default function CoinList() {
               >
                 {numberCommas(m.trade_price)}
               </TableCell>
-              <TableCell className="flex justify-end text-right">
-                <p
-                  className={`p-1 w-24 border border-transparent
+              <TableCell>
+                <div className="flex justify-end w-full">
+                  <div
+                    className={`flex flex-col text-right p-1 w-24 border border-transparent
                     ${m.updated === "up" ? "animate-price-up" : m.updated === "down" ? "animate-price-down" : ""}
                     ${m.change === "RISE" ? "text-red-600" : m.change === "FALL" ? "text-blue-600" : ""}`}
-                >
-                  {(m.signed_change_rate * 100).toFixed(2)}%
-                  <br />
-                  {m.signed_change_price > 0
-                    ? "+" + numberCommas(m.signed_change_price)
-                    : numberCommas(m.signed_change_price)}
-                </p>
+                  >
+                    <span>{(m.signed_change_rate * 100).toFixed(2)}%</span>
+                    <span>
+                      {m.signed_change_price > 0
+                        ? "+" + numberCommas(m.signed_change_price)
+                        : numberCommas(m.signed_change_price)}
+                    </span>
+                  </div>
+                </div>
               </TableCell>
               <TableCell className="text-right">
                 {millionNumbers(m.acc_trade_price_24h)}
