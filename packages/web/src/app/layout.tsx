@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Script from "next/script";
+import LocalFont from "next/font/local";
 import "./globals.css";
 import { Toaster } from "@/components/ui/toaster";
 
@@ -8,6 +9,12 @@ export const metadata: Metadata = {
   description: "코인 모의 투자",
 };
 
+const pretendard = LocalFont({
+  src: "../statics/fonts/PretendardVariable.woff2",
+  display: "swap",
+  weight: "45 920",
+});
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -15,7 +22,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ko" className="h-full">
-      <body className="h-full">
+      <body className={`h-full ${pretendard.className}`}>
         {children}
         <Toaster />
       </body>
