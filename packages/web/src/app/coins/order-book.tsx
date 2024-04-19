@@ -95,7 +95,7 @@ export default function OrderBook({ code }: { code: string }) {
   return (
     <div
       ref={containerRef}
-      className="relative w-1/3 min-w-[140px] sm:max-w-4xl overflow-scroll"
+      className="relative w-1/2 min-w-[140px] sm:max-w-4xl overflow-scroll"
     >
       <Table>
         <TableBody>
@@ -105,7 +105,7 @@ export default function OrderBook({ code }: { code: string }) {
             .map((item, i) => {
               return (
                 <TableRow key={i}>
-                  <TableCell className="w-1/4 bg-blue-200 text-right">
+                  <TableCell className="w-1/4 bg-blue-100 text-right">
                     {item.ask_price}
                   </TableCell>
                   <TableCell className="relative bg-blue-100">
@@ -130,7 +130,7 @@ export default function OrderBook({ code }: { code: string }) {
           {messages.map((item, i) => {
             return (
               <TableRow key={i}>
-                <TableCell className="w-1/4 bg-red-200 text-right">
+                <TableCell className="w-1/4 bg-red-100 text-right">
                   {item.bid_price}
                 </TableCell>
                 <TableCell className="relative  bg-red-100">
