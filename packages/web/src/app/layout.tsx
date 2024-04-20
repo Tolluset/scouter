@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Script from "next/script";
 import LocalFont from "next/font/local";
+import NextTopLoader from "nextjs-toploader";
 import "./globals.css";
 import { Toaster } from "@/components/ui/toaster";
 
@@ -23,6 +24,7 @@ export default function RootLayout({
   return (
     <html lang="ko" className="h-full">
       <body className={`h-full ${pretendard.className}`}>
+        <NextTopLoader showSpinner={false} />
         {children}
         <Toaster />
       </body>
