@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Script from "next/script";
 import LocalFont from "next/font/local";
+import { Analytics } from "@vercel/analytics/react";
 import NextTopLoader from "nextjs-toploader";
 import "./globals.css";
 import { Toaster } from "@/components/ui/toaster";
@@ -27,6 +28,7 @@ export default function RootLayout({
         <NextTopLoader showSpinner={false} />
         {children}
         <Toaster />
+        <Analytics />
       </body>
       <Script
         async
