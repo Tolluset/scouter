@@ -141,39 +141,37 @@ export default function CoinList() {
       <TableBody>
         {messages.map((m, i) => {
           return (
-            <TableRow
-              key={i}
-              onClick={() => router.push(`/coins/${m.code}`)}
-              className="h-20 cursor-pointer"
-            >
-              <TableCell>
-                {getNameByMarket(m.code)} <br /> {m.code}
-              </TableCell>
-              <TableCell
-                className={`text-right ${m.change === "RISE" ? "text-red-600" : m.change === "FALL" ? "text-blue-600" : ""}`}
-              >
-                {numberCommas(m.trade_price)}
-              </TableCell>
-              <TableCell>
-                <div className="flex justify-end w-full">
-                  <div
-                    className={`flex flex-col text-right p-1 w-24 border border-transparent
+            <a key={i} href={`/coins/${m.code}`} className="contents">
+              <TableRow className="h-20">
+                <TableCell>
+                  {getNameByMarket(m.code)} <br /> {m.code}
+                </TableCell>
+                <TableCell
+                  className={`text-right ${m.change === "RISE" ? "text-red-600" : m.change === "FALL" ? "text-blue-600" : ""}`}
+                >
+                  {numberCommas(m.trade_price)}
+                </TableCell>
+                <TableCell>
+                  <div className="flex justify-end w-full">
+                    <div
+                      className={`flex flex-col text-right p-1 w-24 border border-transparent
                     ${m.updated === "up" ? "animate-price-up" : m.updated === "down" ? "animate-price-down" : ""}
                     ${m.change === "RISE" ? "text-red-600" : m.change === "FALL" ? "text-blue-600" : ""}`}
-                  >
-                    <span>{(m.signed_change_rate * 100).toFixed(2)}%</span>
-                    <span>
-                      {m.signed_change_price > 0
-                        ? "+" + numberCommas(m.signed_change_price)
-                        : numberCommas(m.signed_change_price)}
-                    </span>
+                    >
+                      <span>{(m.signed_change_rate * 100).toFixed(2)}%</span>
+                      <span>
+                        {m.signed_change_price > 0
+                          ? "+" + numberCommas(m.signed_change_price)
+                          : numberCommas(m.signed_change_price)}
+                      </span>
+                    </div>
                   </div>
-                </div>
-              </TableCell>
-              <TableCell className="text-right">
-                {millionNumbers(m.acc_trade_price_24h)}
-              </TableCell>
-            </TableRow>
+                </TableCell>
+                <TableCell className="text-right">
+                  {millionNumbers(m.acc_trade_price_24h)}
+                </TableCell>
+              </TableRow>
+            </a>
           );
         })}
       </TableBody>
